@@ -1,2 +1,2 @@
 # pg-database
-Database for the PriceGuyS Web Application
+Database for the PriceGuy$ Web Application
