@@ -1,5 +1,5 @@
 import datetime
-import sys
+import json
 from ebaysdk.exception import ConnectionError
 from ebaysdk.finding import Connection
 from pynamodb.models import Model
@@ -24,7 +24,6 @@ def main():
 
                 assert(response.reply.ack == 'Success') # if not a 200 aka "success"
                 assert(type(response.reply.timestamp) == datetime.datetime) # assert is used for error checking
-                # assert(type(response.reply.searchResult.item) == list) # errors out when no results returned
                 assert(type(response.dict()) == dict) # makes sure response is of type dict else error?
                 item = response.dict()
 
@@ -32,13 +31,16 @@ def main():
                     print "Search has no results"
                 else:
                     for listing in item['searchResult']['item']:
-                        result = []
-                        result.extend((query, listing['title'], listing['sellingStatus']['convertedCurrentPrice']['value'], listing['sellingStatus']['convertedCurrentPrice']['_currencyId'], listing['condition']['conditionDisplayName'], listing['primaryCategory']['categoryName'], listing['country'], listing['shippingInfo']['shipToLocations']))
-                        results.append(result)
-                        print result
+                        listingDict = {}
+                        listingDict['query'] = query.rstrip(); listingDict['title'] = listing['title']; listingDict['URL'] = listing['viewItemURL']
+                        listingDict['price'] = listing['sellingStatus']['convertedCurrentPrice']['value']; listingDict['currency'] = listing['sellingStatus']['convertedCurrentPrice']['_currencyId']
+                        listingDict['condition'] = listing['condition']['conditionDisplayName']; listingDict['endTime'] = listing['listingInfo']['endTime']
+                        listingDict['category'] = listing['primaryCategory']['categoryName']; listingDict['country'] = listing['country']; listingDict['shipsTo'] = listing['shippingInfo']['shipToLocations']
+                        results.append(listingDict)
 
-            for i, line in results:
-                print "listing {}: ".format(i)+str(line)+"\n" #too many values to unpack should be 300
+        with open('jsonResults.json', 'w') as w: # might wannna do a for loop and do appends?
+            json.dump(results, w, indent=4, sort_keys=True)
+
 
     except ConnectionError as e:
         print(e)
