@@ -1,9 +1,13 @@
 import datetime
 from ebaysdk.exception import ConnectionError
 from ebaysdk.finding import Connection
+from pynamodb.models import Model
+from pynamodb.attributes import UnicodeAttribute
 
 # https://github.com/timotheus/ebaysdk-python
 # install guide https://github.com/timotheus/ebaysdk-python/blob/master/INSTALL
+
+
 
 try:
     api = Connection(appid="DavisFre-PriceGuy-PRD-d5d74fc8f-5a07a211", config_file=None)
@@ -29,6 +33,8 @@ try:
     item = response.dict()
     for i,listing in enumerate(item['searchResult']['item']):
         print "listing {}: ".format(i)+str(listing)+"\n"
+
+
 
 except ConnectionError as e:
     print(e)
