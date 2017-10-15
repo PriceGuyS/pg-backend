@@ -14,7 +14,14 @@ def main():
                 response = api.execute('findItemsAdvanced', {'keywords': '{}'.format(query), # link below has more arguments for itemfilter
                                                             "PaginationInput": { # does not work for w/e reason
                                                             # "EntriesPerPage": 50,
-                                                            "PageNumber": 1 # (i+1)
+                                                                "PageNumber": 1 # page works but results doesnt
+                                                            },
+                                                            "itemFilter": { # https://developer.ebay.com/devzone/finding/callref/types/ListingInfo.html
+                                                            # https://developer.ebay.com/devzone/finding/callref/types/ItemFilterType.html
+                                                            # theres listinginfo and listing, not sure which is right and I can't get either to filter properly
+                                                                "ListingInfo": [{
+                                                                    "buyItNowAvailable": True
+                                                                }]
                                                             },
                                                             "categoryId": [
                                                                 '139973' # this is for videogames
@@ -31,14 +38,15 @@ def main():
                     print "Search has no results"
                 else:
                     for listing in item['searchResult']['item']:
+                        # print listing['listingInfo']['buyItNowAvailable']
                         listingDict = {}
-                        listingDict['query'] = query.rstrip(); listingDict['title'] = listing['title']; listingDict['URL'] = listing['viewItemURL']
+                        listingDict['id'] = listing['itemId']; listingDict['query'] = query.rstrip(); listingDict['title'] = listing['title']; listingDict['URL'] = listing['viewItemURL']
                         listingDict['price'] = listing['sellingStatus']['convertedCurrentPrice']['value']; listingDict['currency'] = listing['sellingStatus']['convertedCurrentPrice']['_currencyId']
                         listingDict['condition'] = listing['condition']['conditionDisplayName']; listingDict['endTime'] = listing['listingInfo']['endTime']
                         listingDict['category'] = listing['primaryCategory']['categoryName']; listingDict['country'] = listing['country']; listingDict['shipsTo'] = listing['shippingInfo']['shipToLocations']
                         results.append(listingDict)
 
-        with open('jsonResults.json', 'w') as w: # might wannna do a for loop and do appends?
+        with open('jsonResults1.json', 'w') as w: # might wannna do a for loop and do appends?
             json.dump(results, w, indent=4, sort_keys=True)
 
 

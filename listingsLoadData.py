@@ -4,11 +4,13 @@ import json
 import decimal
 
 # http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.Python.html tutorial!
-dynamodb = boto3.resource('dynamodb', aws_access_key_id='##YourKeyHere##', aws_secret_access_key='##YourKeyHere##', region_name='us-west-2')
+mysession = boto3.session.Session(aws_access_key_id='ACCESS_KEY', aws_secret_access_key='SECRET_KEY') # this accesses the keys in the 'credentials' file in ~/.aws/
+#mysession = boto3.session.Session(profile_name="davis2") # for specifying user
+dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
 
-table = dynamodb.Table('Listings')
+table = dynamodb.Table('Listings1')
 
-with open("jsonResults.json") as json_file:
+with open("jsonResults1.json") as json_file:
     listings = json.load(json_file, parse_float = decimal.Decimal)
     for listing in listings:
         URL = listing['URL']
@@ -17,6 +19,7 @@ with open("jsonResults.json") as json_file:
         country = listing['country']
         currency = listing['currency']
         endTime = listing['endTime']
+        ID = listing['id'] # case not matching because I didn't realize id is a keyword
         price = listing['price']
         query = listing['query']
         shipsTo = listing['shipsTo']
@@ -33,6 +36,7 @@ with open("jsonResults.json") as json_file:
                'country': country,
                'currency': currency,
                'endTime': endTime,
+               'id': ID,
                'price': price,
                'query': query,
                'shipsTo': shipsTo,
