@@ -1,5 +1,7 @@
 import requests
 
+# https://github.com/bemasher/NeweggMobileAPI
+# CHECK THIS OUT: https://github.com/econpy/newegg
 URL = "http://www.ows.newegg.com/Search.egg/Advanced/application/x-www-form-urlencoded"
 PARAMS = {
         	"PageNumber": 1,
