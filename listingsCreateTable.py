@@ -1,17 +1,19 @@
 from __future__ import print_function # Python 2/3 compatibility
 import boto3
 
-dynamodb = boto3.resource('dynamodb', aws_access_key_id='##YourKeyHere##', aws_secret_access_key='##YourKeyHere##', region_name='us-west-2')
+mysession = boto3.session.Session(aws_access_key_id='ACCESS_KEY', aws_secret_access_key='SECRET_KEY') # this accesses the keys in the 'credentials' file in ~/.aws/
+#mysession = boto3.session.Session(profile_name="davis2") # for specifying user
+dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
 # PRICING! https://aws.amazon.com/dynamodb/pricing/
 # Tutorial: http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.Python.html
 
 table = dynamodb.create_table(
-    TableName='Listings',
+    TableName='Listings1',
     KeySchema=[ # http://boto3.readthedocs.io/en/latest/reference/services/dynamodb.html#DynamoDB.Client.create_table
     # https://aws.amazon.com/blogs/database/choosing-the-right-dynamodb-partition-key/
     # http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GuidelinesForTables.html
         {
-            'AttributeName': 'URL',
+            'AttributeName': 'id',
             'KeyType': 'HASH'  #Partition key
         },
         {
@@ -21,7 +23,7 @@ table = dynamodb.create_table(
     ], # http://boto3.readthedocs.io/en/latest/reference/customizations/dynamodb.html not a lot of data types, one for date in Java but not python. Not even a floa
     AttributeDefinitions=[ #number of attribs has to match between key schema and attrib defs. kept these just in case schema needs adjusting
         {
-            'AttributeName': 'URL',
+            'AttributeName': 'id',
             'AttributeType': 'S'
         },
         # {
