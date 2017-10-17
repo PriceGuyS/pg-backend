@@ -16,13 +16,13 @@ def main():
                                                             # "EntriesPerPage": 50,
                                                                 "PageNumber": 1 # page works but results doesnt
                                                             },
-                                                            "itemFilter": { # https://developer.ebay.com/devzone/finding/callref/types/ListingInfo.html
+                                                            "itemFilter": [{ # https://developer.ebay.com/devzone/finding/callref/types/ListingInfo.html
                                                             # https://developer.ebay.com/devzone/finding/callref/types/ItemFilterType.html
                                                             # theres listinginfo and listing, not sure which is right and I can't get either to filter properly
-                                                                "ListingInfo": [{
-                                                                    "buyItNowAvailable": True
-                                                                }]
-                                                            },
+
+                                                                    'name': 'ListingType', 'value': 'AuctionWithBIN'
+
+                                                            }],
                                                             "categoryId": [
                                                                 '139973' # this is for videogames
                                                             ]
@@ -38,7 +38,7 @@ def main():
                     print "Search has no results"
                 else:
                     for listing in item['searchResult']['item']:
-                        # print listing['listingInfo']['buyItNowAvailable']
+                        print listing['listingInfo']['buyItNowAvailable']
                         listingDict = {}
                         listingDict['id'] = listing['itemId']; listingDict['query'] = query.rstrip(); listingDict['title'] = listing['title']; listingDict['URL'] = listing['viewItemURL']
                         listingDict['price'] = listing['sellingStatus']['convertedCurrentPrice']['value']; listingDict['currency'] = listing['sellingStatus']['convertedCurrentPrice']['_currencyId']
