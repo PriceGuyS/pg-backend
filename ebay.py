@@ -16,13 +16,14 @@ def main():
                                                             # "EntriesPerPage": 50,
                                                                 "PageNumber": 1 # page works but results doesnt
                                                             },
-                                                            "itemFilter": [{ # https://developer.ebay.com/devzone/finding/callref/types/ListingInfo.html
+                                                            "itemFilter": [ # https://developer.ebay.com/devzone/finding/callref/types/ListingInfo.html
                                                             # https://developer.ebay.com/devzone/finding/callref/types/ItemFilterType.html
                                                             # theres listinginfo and listing, not sure which is right and I can't get either to filter properly
 
-                                                                    'name': 'ListingType', 'value': 'AuctionWithBIN'
+                                                                    # {'name': 'ListingType', 'value': 'AuctionWithBIN'}, # not sure how to get both
+                                                                    {'name': 'ListingType', 'value': 'FixedPrice'} # allegedly you can just give one name two values but it didnt seem to work
 
-                                                            }],
+                                                            ],
                                                             "categoryId": [
                                                                 '139973' # this is for videogames
                                                             ]
