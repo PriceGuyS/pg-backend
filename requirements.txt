@@ -1,2 +1,3 @@
 python-amazon-product-api
 lxml
+boto3
