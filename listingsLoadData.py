@@ -22,9 +22,11 @@ def loadData(jsonFile, name):
             endTime = listing['endTime']
             ID = listing['id'] # case not matching because I didn't realize id is a keyword
             price = listing['price']
-            query = listing['query']
+            inputQuery = listing['inputQuery']
             shipsTo = listing['shipsTo']
             title = listing['title']
+            imageURL = listing['imageURL']
+            site = listing['site']
 
 
             print("Adding listing: ", title)
@@ -39,8 +41,10 @@ def loadData(jsonFile, name):
                    'endTime': endTime,
                    'id': ID,
                    'price': price,
-                   'query': query,
+                   'inputQuery': inputQuery,
                    'shipsTo': shipsTo,
-                   'title': title
+                   'title': title,
+                   'imageURL': imageURL,
+                   'site': site
                 }
             )

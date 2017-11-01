@@ -18,15 +18,15 @@ def createTable(name):
                 'KeyType': 'HASH'  #Partition key
             },
             {
-                'AttributeName': 'query',
+                'AttributeName': 'inputQuery',
                 'KeyType': 'RANGE'  #Sort key
-            }
+            },
         ], # http://boto3.readthedocs.io/en/latest/reference/customizations/dynamodb.html not a lot of data types, one for date in Java but not python. Not even a floa
         AttributeDefinitions=[ #number of attribs has to match between key schema and attrib defs. kept these just in case schema needs adjusting
-            {
-                'AttributeName': 'id',
-                'AttributeType': 'S'
-            },
+            # {
+            #     'AttributeName': 'site',
+            #     'AttributeType': 'S'
+            # },
             # {
             #     'AttributeName': 'category',
             #     'AttributeType': 'S'
@@ -43,18 +43,19 @@ def createTable(name):
             #     'AttributeName': 'currency',
             #     'AttributeType': 'S'
             # },
-            # {
-            #     'AttributeName': 'endTime',
-            #     'AttributeType': 'S'
-            # },
+
             # {
             #     'AttributeName': 'price',
             #     'AttributeType': 'N' #might work for decimals
             # },
             {
-                'AttributeName': 'query',
+                'AttributeName': 'id',
                 'AttributeType': 'S'
-            }# ,
+            },
+            {
+                'AttributeName': 'inputQuery',
+                'AttributeType': 'S'
+            }
             # {
             #     'AttributeName': 'shipsTo',
             #     'AttributeType': 'S'
@@ -68,9 +69,34 @@ def createTable(name):
         ], # http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ProvisionedThroughput.html I doubt we need 10
         # 1 read per sec for a 4kb item 1 write per sec for 1kb
         # about 25 for both for free package
+        # GlobalSecondaryIndexes=[
+        #     {
+        #         'IndexName': "videogames",
+        #         'KeySchema': [
+        #             {
+        #                 'AttributeName': 'site',
+        #                 'KeyType': 'HASH'
+        #             },
+        #             {
+        #                 'AttributeName': 'inputQuery',
+        #                 'KeyType': 'RANGE'
+        #             }
+        #         ],
+        #         'Projection': {
+        #             'ProjectionType': 'INCLUDE',
+        #             'NonKeyAttributes': [
+        #                 'title',
+        #             ]
+        #         },
+        #         'ProvisionedThroughput': {
+        #             'ReadCapacityUnits': 10,
+        #             'WriteCapacityUnits': 10
+        #         }
+        #     }
+        # ],
         ProvisionedThroughput={
-            'ReadCapacityUnits': 10,
-            'WriteCapacityUnits': 10
+            'ReadCapacityUnits': 15,
+            'WriteCapacityUnits': 15
         }
     )
 

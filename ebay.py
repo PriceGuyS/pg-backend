@@ -25,6 +25,9 @@ def main():
                                                             ],
                                                             "categoryId": [
                                                                 '139973' # this is for videogames
+                                                            ],
+                                                            "outputSelector": [
+                                                                'PictureURLSuperSize' # ebay returns a default set of data, need to specify extraneous data
                                                             ]
                                                             })
 
@@ -36,17 +39,22 @@ def main():
                 if item['paginationOutput']['totalPages'] == '0': # detects if 0 results returned, 0 also a string
                     print "Search has no results"
                 else:
+                    i = 0
                     for listing in item['searchResult']['item']:
-                        print query
                         listingDict = {}
-                        listingDict['id'] = listing['itemId']; listingDict['query'] = query.rstrip(); listingDict['title'] = listing['title']; listingDict['URL'] = listing['viewItemURL']
+                        listingDict['id'] = listing['itemId']; listingDict['inputQuery'] = query.rstrip(); listingDict['title'] = listing['title']; listingDict['URL'] = listing['viewItemURL']
                         listingDict['price'] = listing['sellingStatus']['convertedCurrentPrice']['value']; listingDict['currency'] = listing['sellingStatus']['convertedCurrentPrice']['_currencyId']
                         listingDict['condition'] = listing['condition']['conditionDisplayName']; listingDict['endTime'] = listing['listingInfo']['endTime']
                         listingDict['category'] = listing['primaryCategory']['categoryName']; listingDict['country'] = listing['country']; listingDict['shipsTo'] = listing['shippingInfo']['shipToLocations']
+                        listingDict['site'] = 'ebay'
+                        try:
+                            listingDict['imageURL'] = listing['pictureURLSuperSize']
+                        except:
+                            listingDict['imageURL'] = "N/A"
                         results.append(listingDict)
 
-        jsonFile = 'jsonResults3.json'
-        tableName = 'testTable'
+        jsonFile = 'jsonResults11.json'
+        tableName = 'testTable5'
         with open(jsonFile, 'w') as w: # might wannna do a for loop and do appends?
             json.dump(results, w, indent=4, sort_keys=True)
 
