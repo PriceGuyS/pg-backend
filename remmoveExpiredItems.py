@@ -11,4 +11,10 @@ def removeItems(tableName):
 
     table = dynamodb.Table(tableName)
 
-    
+    table.delete_item(      #this needs to be chenged to check every item in table
+        Key={
+            'id': ID,
+            'endTime': endTime
+        },
+        ConditionExpression="",
+    )
