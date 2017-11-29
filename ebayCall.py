@@ -49,7 +49,7 @@ def ebay(inputList):
                             listingDict['imageURL'] = "N/A"
                         results.append(listingDict)
 
-        jsonFile = 'jsontest.json'
+        jsonFile = 'ebay.json'
         with open(jsonFile, 'w') as w: # might wannna do a for loop and do appends?
             json.dump(results, w, indent=4, sort_keys=True)
         print results
@@ -57,6 +57,3 @@ def ebay(inputList):
     except ConnectionError as e:
         print(e)
         print(e.response.dict())
-
-
-ebay("n64list")
