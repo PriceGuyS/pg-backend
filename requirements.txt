@@ -1,3 +1,4 @@
 python-amazon-product-api
 lxml
 boto3
+ebaysdk

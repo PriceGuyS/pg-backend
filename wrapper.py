@@ -1,6 +1,6 @@
 from ebayCall import ebay
 from amazon import amazon
-from imports import importData
+from importer import importData
 
 def main():
     ebay("n64list")
@@ -9,5 +9,5 @@ def main():
     importData("AmazonTest","amazon_results.json")
 
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     main()

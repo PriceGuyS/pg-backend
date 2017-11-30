@@ -5,6 +5,7 @@ from ebaysdk.exception import ConnectionError
 from ebaysdk.finding import Connection
 
 def ebay(inputList):
+    print "Querying Ebay API with {}:".format(inputList)
     try: # insert a cron job?
         with open(inputList,'rU') as f: #n64 list contains list of queries that are iterated through
             results = []
