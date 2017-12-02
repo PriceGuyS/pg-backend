@@ -14,11 +14,11 @@ def createTable(name):
         # https://aws.amazon.com/blogs/database/choosing-the-right-dynamodb-partition-key/
         # http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GuidelinesForTables.html
             {
-                'AttributeName': 'id',
+                'AttributeName': 'inputQuery',
                 'KeyType': 'HASH'  #Partition key
             },
             {
-                'AttributeName': 'inputQuery',
+                'AttributeName': 'id',
                 'KeyType': 'RANGE'  #Sort key
             },
         ], # http://boto3.readthedocs.io/en/latest/reference/customizations/dynamodb.html not a lot of data types, one for date in Java but not python. Not even a floa
