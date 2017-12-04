@@ -15,6 +15,7 @@ def importData(jsonFile, name):
     table = dynamodb.Table(name)
 
     with open(jsonFile) as json_file:
+
         listings = json.load(json_file, parse_float = decimal.Decimal)
         for listing in listings:
             counter = 0
@@ -41,7 +42,8 @@ def importData(jsonFile, name):
                     )
                     counter = 0
                     break
-                except:
+                except Exception as e:
+                    print e
                     counter = counter + 1
 
 def parse_json():
